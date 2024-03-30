@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 public class SplashActivity extends AppCompatActivity {
@@ -15,15 +16,12 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        ActionBar actionBar = getSupportActionBar();
-        try {
-            if (actionBar != null) {
-                actionBar.hide();
-            }
-        } catch (Error e) {
-            // Log the error message with a proper tag
-            Log.e("SplashActivity", "Error occurred while hiding action bar: " + e.getMessage());
-        }
+        View decorView = getWindow().getDecorView();
+
+        //hide the system navigation and status bar on app start
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN;
+        ((View) decorView).setSystemUiVisibility(uiOptions);
+
         final Intent i = new Intent(SplashActivity.this,MainActivity.class);
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -31,6 +29,6 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(i);
                 finish();
             }
-        },1000);
+        },2000);
     }
 }
